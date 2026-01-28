@@ -1,21 +1,19 @@
 package com.kusho.assessment.controllers;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kusho.assessment.dtos.AnalyzeRepo;
-import com.kusho.assessment.dtos.GitHubIssues;
 import com.kusho.assessment.dtos.ScanRepoDto;
 import com.kusho.assessment.services.IssueServices;
 
 import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @Validated
@@ -32,7 +30,7 @@ public class IssueController {
         try {
             return ResponseEntity.ok(issueServices.scanIssues(req));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 
@@ -41,7 +39,7 @@ public class IssueController {
         try {
             return ResponseEntity.ok(issueServices.analyzeIssues(req));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
 }

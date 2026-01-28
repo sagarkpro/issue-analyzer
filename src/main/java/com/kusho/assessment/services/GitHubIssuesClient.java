@@ -14,7 +14,7 @@ import java.util.List;
 public class GitHubIssuesClient {
 
     private static final String BASE_URL = "https://api.github.com";
-    private static final int PER_PAGE = 100;
+    private static final int PER_PAGE = 25;
 
     private static final OkHttpClient client = new OkHttpClient();
     private static final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
@@ -28,7 +28,7 @@ public class GitHubIssuesClient {
 
             HttpUrl url = HttpUrl.parse(
                     BASE_URL + "/repos/" + owner + "/" + repo + "/issues").newBuilder()
-                    .addQueryParameter("state", "all")
+                    .addQueryParameter("state", "open")
                     .addQueryParameter("per_page", String.valueOf(PER_PAGE))
                     .addQueryParameter("page", String.valueOf(page))
                     .build();

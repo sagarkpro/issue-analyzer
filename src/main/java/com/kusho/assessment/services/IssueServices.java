@@ -1,11 +1,10 @@
 package com.kusho.assessment.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -37,15 +36,48 @@ public class IssueServices {
         var issueMap = GitHubIssues.getInstance().getIssuesMap();
         var issues = issueMap.get(req.getRepo());
 
-        StringBuilder prompt = new StringBuilder(req.getPrompt());
-        prompt.append("\n These are the current open issues in git:\n");
-        prompt.append(mapper.writeValueAsString(issues));
-        GenerateContentResponse response = geminiClient.models.generateContent(
+        if (issues == null || issues.isEmpty()) {
+            throw new IllegalArgumentException("No issues found for this repo. Scan it or open some issues, maybe?");
+        }
+
+        int chunkSize = 10;
+        List<String> partialResults = new ArrayList<>();
+
+        for (int i = 0; i < issues.size(); i += chunkSize) {
+            try {
+                List<?> chunk = issues.subList(i, Math.min(i + chunkSize, issues.size()));
+
+                String chunkPrompt = req.getPrompt() +
+                        "\n[PARTIAL DATA - ANALYZE THIS CHUNK ONLY]\n" +
+                        mapper.writeValueAsString(chunk);
+
+                GenerateContentResponse response = geminiClient.models.generateContent(
+                        "gemini-3-flash-preview",
+                        chunkPrompt,
+                        null);
+
+                partialResults.add(response.text());
+            } catch (Exception e) {
+                System.out.println("Error inside chunked for loop");
+                System.out.println(e);
+            }
+        }
+
+        if (partialResults.size() == 1) {
+            return AnalysisResultDto.builder().analysis(partialResults.get(0)).build();
+        }
+
+        String finalPrompt = "I have analyzed a large number of issues in batches. " +
+                "Here are the summaries of each batch. Please provide a final, cohesive analysis " +
+                "based on the original request: " + req.getPrompt() + "\n\n" +
+                String.join("\n---\n", partialResults);
+
+        GenerateContentResponse finalResponse = geminiClient.models.generateContent(
                 "gemini-3-flash-preview",
-                prompt.toString(),
+                finalPrompt,
                 null);
 
-        return AnalysisResultDto.builder().analysis(response.text()).build();
+        return AnalysisResultDto.builder().analysis(finalResponse.text()).build();
     }
 
     public RepoStatsDto scanIssues(ScanRepoDto req) throws IOException {
