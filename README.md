@@ -79,3 +79,28 @@ curl --location 'localhost:7771/api/issue/analyze' \
     "prompt": "Find themes across recent issues and recommend what the maintainers should fix first"
 }'
 ```
+
+### Prompts used (ChatGPT and Gemini)
+
+- add yml section in md file
+- this is my domain: [cursedshrine.co.in](http://cursedshrine.co.in/), suggest me about 10-15 subdomains for an api that I just deployed for analyzing github issues using gemini. The subdomain must start with api. (unless you come up with an absolute bomb!)
+- github api to fetch all issues in a repository, gimme an example in java
+- stop all the vscode servers running on my vps with cli
+- convert list to string using objectMapper
+- gemini client fails to initialize even though I have set the api keys like this: (in applicatoin.yml) GEMINI_API_KEY: my-key
+- make a java dto using lombok and builder for this: {
+  "repo": "owner/repository-name",
+  "issues_fetched": 42,
+  "cached_successfully": true
+}
+- is there a better way to do this: String owner = repo[0], repoName = repo[1];
+- com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module \"com.fasterxml.jackson.datatype:jackson-datatype-jsr310\" to enable handling (or disable `MapperFeature.REQUIRE_HANDLERS_FOR_JAVA8_TIMES`)\n at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1634] (through reference chain: java.util.ArrayList[0]->com.kusho.assessment.dtos.Issue[\"created_at\"])
+
+I added:
+
+<dependency>
+<groupId>com.fasterxml.jackson.datatype</groupId>
+<artifactId>jackson-datatype-jsr310</artifactId>
+</dependency>
+
+still I get same error
