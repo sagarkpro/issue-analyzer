@@ -1,9 +1,9 @@
-package com.kusho.assessment.services;
+package com.cursed.github.services;
 
+import com.cursed.github.dtos.Issue;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.kusho.assessment.dtos.Issue;
 
 import okhttp3.*;
 

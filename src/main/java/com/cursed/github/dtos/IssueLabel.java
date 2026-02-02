@@ -1,4 +1,4 @@
-package com.kusho.assessment.dtos;
+package com.cursed.github.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

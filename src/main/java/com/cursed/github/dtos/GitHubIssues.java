@@ -1,4 +1,4 @@
-package com.kusho.assessment.dtos;
+package com.cursed.github.dtos;
 
 import java.util.List;
 import java.util.Map;

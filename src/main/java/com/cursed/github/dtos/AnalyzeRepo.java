@@ -1,4 +1,4 @@
-package com.kusho.assessment.dtos;
+package com.cursed.github.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ScanRepoDto {
+public class AnalyzeRepo {
     @NotNull
     String repo;
+    @NotNull
+    String prompt;
 }

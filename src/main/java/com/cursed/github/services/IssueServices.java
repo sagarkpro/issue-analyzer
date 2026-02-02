@@ -1,4 +1,4 @@
-package com.kusho.assessment.services;
+package com.cursed.github.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,16 +8,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.cursed.github.dtos.AnalysisResultDto;
+import com.cursed.github.dtos.AnalyzeRepo;
+import com.cursed.github.dtos.GitHubIssues;
+import com.cursed.github.dtos.Issue;
+import com.cursed.github.dtos.RepoStatsDto;
+import com.cursed.github.dtos.ScanRepoDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
-import com.kusho.assessment.dtos.AnalysisResultDto;
-import com.kusho.assessment.dtos.AnalyzeRepo;
-import com.kusho.assessment.dtos.GitHubIssues;
-import com.kusho.assessment.dtos.Issue;
-import com.kusho.assessment.dtos.RepoStatsDto;
-import com.kusho.assessment.dtos.ScanRepoDto;
 
 @Service
 public class IssueServices {

@@ -1,4 +1,4 @@
-package com.kusho.assessment.controllers;
+package com.cursed.github.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

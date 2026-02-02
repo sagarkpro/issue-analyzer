@@ -1,4 +1,4 @@
-package com.kusho.assessment.controllers;
+package com.cursed.github.controllers;
 
 import java.util.Map;
 
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kusho.assessment.dtos.AnalyzeRepo;
-import com.kusho.assessment.dtos.ScanRepoDto;
-import com.kusho.assessment.services.IssueServices;
+import com.cursed.github.dtos.AnalyzeRepo;
+import com.cursed.github.dtos.ScanRepoDto;
+import com.cursed.github.services.IssueServices;
 
 import jakarta.validation.Valid;
 
